@@ -93,7 +93,7 @@ public class Visualisator extends JFrame implements Depht {
             adj[i] = new ArrayList<Integer>();
         }
 
-        //считываем граф, заданный списком ребер
+        ///считываем граф, заданный списком ребер
         for (int i = 0; i < m; ++i) {
             tokenizer = new StringTokenizer(cin.readLine());
             int v = 0, w = 0;
