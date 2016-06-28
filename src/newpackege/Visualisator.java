@@ -38,6 +38,7 @@ public class Visualisator extends JFrame implements Depht {
         Object parent = graph.getDefaultParent();
 
         graph.getModel().beginUpdate();
+        
 
         // readData();
         // int n; // РљРѕР»РёС‡РµСЃС‚РІРѕ РІРµСЂС€РёРЅ
