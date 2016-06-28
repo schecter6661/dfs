@@ -61,7 +61,7 @@ public class Visualisator extends JFrame implements Depht {
         getContentPane().add(graphComponent);
     }
 
-    @Override
+    //@Override
    public void dfs(int v) {
        //если вершина является пройденной, то не производим из нее вызов процедуры
 
@@ -78,7 +78,7 @@ public class Visualisator extends JFrame implements Depht {
    }
 
 
-    @Override
+    //@Override
     public void readData() throws IOException {
         System.out.print("Enter number of vertices and edges: ");
         cin = new BufferedReader(new InputStreamReader(System.in));
@@ -93,7 +93,7 @@ public class Visualisator extends JFrame implements Depht {
             adj[i] = new ArrayList<Integer>();
         }
 
-        //считываем граф, заданный списком ребер
+        ///считываем граф, заданный списком ребер
         for (int i = 0; i < m; ++i) {
             tokenizer = new StringTokenizer(cin.readLine());
             int v = 0, w = 0;
