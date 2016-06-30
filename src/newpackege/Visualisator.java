@@ -1,11 +1,9 @@
 package newpackege;
 
 import javax.swing.*;
-
 import com.mxgraph.swing.mxGraphComponent;
 import com.mxgraph.view.mxGraph;
 import javafx.util.Pair;
-
 
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -16,8 +14,8 @@ import java.util.Scanner;
 
 public class Visualisator extends JPanel implements Depht {
 
-    private int n; //количество вершин в графе
-    private int m; //количество дуг в графе
+    private static int n; //количество вершин в графе
+    private static int m; //количество дуг в графе
     private ArrayList<ArrayList<Integer>> adj; //список смежности
     private boolean used[]; //массив для хранения информации о пройденных и не пройденных вершинах
     private ArrayList<Integer> listDepht;
@@ -53,11 +51,11 @@ public class Visualisator extends JPanel implements Depht {
         mxGraphComponent graphComponent = new mxGraphComponent(graph);
         this.add(graphComponent);
         this.revalidate();
-
     }
 
-    @Override
-    public void dfs(int v) {
+
+
+   /* public void dfs(int v) {
         //если вершина является пройденной, то не производим из нее вызов процедуры
         used[v] = true; //помечаем вершину как пройденную
         listDepht.add(v + 1);
@@ -69,8 +67,7 @@ public class Visualisator extends JPanel implements Depht {
                 dfs(w); //вызов обхода в глубину от вершины w, смежной с вершиной v
             }
         }
-    }
-
+    }*/
 
     public void dfsVisual() {
         mxGraph graph = new mxGraph();
@@ -85,12 +82,17 @@ public class Visualisator extends JPanel implements Depht {
             phi0 += phi;
         }
         for (int i = 0; i < listEdges.size(); i++) {
+
             graph.insertEdge(parent, null, null, points[listEdges.get(i).getKey()], points[listEdges.get(i).getValue()]);
         }
         graph.getModel().endUpdate();
         mxGraphComponent graphComponent = new mxGraphComponent(graph);
         this.add(graphComponent);
         this.revalidate();
+    }
+
+    @Override
+    public void dfs(int v) {
 
     }
 
@@ -133,23 +135,6 @@ public class Visualisator extends JPanel implements Depht {
     }
 
 
-    public static void main(String[] args) throws IOException {
-        JFrame frame = new JFrame();
-        frame.setSize(800, 800);
-        Visualisator panel = new Visualisator();
-        try {
-            panel.run();
-        } catch (RuntimeException e) {
-            System.out.println(e.getMessage());
-        }
-        try {
-            panel.functionVisual();
-        } catch (RuntimeException e1) {
-            System.out.println(e1.getMessage());
-        }
-        panel.dfsVisual();
-        frame.add(panel);
-        frame.setVisible(true);
-    }
+
 }
 
