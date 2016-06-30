@@ -12,14 +12,14 @@ import java.util.ArrayList;
 
 public class Visualisator extends JPanel {
 
-    public static int n; //количество вершин в графе
-    public static int m; //количество дуг в графе
-    public ArrayList<ArrayList<Integer>> adj; //список смежности
-    public boolean used[]; //массив для хранения информации о пройденных и не пройденных вершинах
-    public ArrayList<Integer> listDepht;
-    public ArrayList<Pair<Integer, Integer>> listEdges;
+    protected static int n; //количество вершин в графе
+    protected static int m; //количество дуг в графе
+    protected ArrayList<ArrayList<Integer>> adj; //список смежности
+    protected boolean used[]; //массив для хранения информации о пройденных и не пройденных вершинах
+    protected ArrayList<Integer> listDepht;
+    protected ArrayList<Pair<Integer, Integer>> listEdges;
 
-    public PrintWriter cout;
+    protected PrintWriter cout;
 
 
     @SuppressWarnings("unused")
@@ -66,7 +66,6 @@ public class Visualisator extends JPanel {
             phi0 += phi;
         }
         for (int i = 0; i < listEdges.size(); i++) {
-
             graph.insertEdge(parent, null, null, points[listEdges.get(i).getKey()], points[listEdges.get(i).getValue()]);
         }
         graph.getModel().endUpdate();
@@ -82,16 +81,12 @@ public class Visualisator extends JPanel {
         Algo panel = new Algo();
         try {
             panel.run();
-        } catch (RuntimeException e) {
-            System.out.println(e.getMessage());
-        }
-        try {
             panel.functionVisual();
-        } catch (RuntimeException e1) {
-            System.out.println(e1.getMessage());
+            panel.dfsVisual();
+            frame.add(panel);
+            frame.setVisible(true);
+        } catch (IndexOutOfBoundsException e) {
+            System.err.println(e.getMessage());
         }
-        panel.dfsVisual();
-        frame.add(panel);
-        frame.setVisible(true);
     }
 }
