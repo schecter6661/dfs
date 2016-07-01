@@ -72,6 +72,7 @@ public class Visualisator extends JPanel {
             for (int i = 0; i < listDepht.size(); i++) {
                 if (listEdges.contains(new Pair<>(i, listDepht.get(step) - 1))) {
                     graph.getModel().setStyle(graph.getEdgesBetween(points[i], points[listDepht.get(step) - 1])[0], "strokeColor=#00FF00");
+                    graph.getModel().setStyle(graph.getEdgesBetween(points[i], points[listDepht.get(step) - 1])[1], "strokeColor=#00FF00");
                     break;
                 }
             }
