@@ -12,6 +12,7 @@ import java.io.*;
 public class Main {
 
     static int step = 0;
+
     public static void main(String[] args) throws IOException {
 
         JFrame frame = new JFrame();
@@ -46,22 +47,27 @@ public class Main {
             @Override
             public void actionPerformed(ActionEvent e) {
                 //удаление всего всего всего
-                // JFileChooser fileChooser = new JFileChooser();
-                // int ret = fileChooser.showDialog(null,"Open file");
-                // if (ret == JFileChooser.APPROVE_OPTION) {
-                try {
-                    panel.run();
-                } catch (IOException e1) {
-                    e1.printStackTrace();
+                JFileChooser fileChooser = new JFileChooser();
+                int ret = fileChooser.showDialog(null, "Open file");
+                if (ret == JFileChooser.APPROVE_OPTION) {
+                    //try {
+                    //    panel.run();
+                    //} catch (IOException e1) {
+                    //    e1.printStackTrace();
+                    //}
+                    try {
+                        panel.run(fileChooser.getSelectedFile());
+                        panel.functionVisual();
+
+                    } catch (NumberFormatException ex) {
+                        JOptionPane.showMessageDialog(null, "input incorrect!","ERROR", JOptionPane.ERROR_MESSAGE);
+                    } //catch (IndexOutOfBoundsException ex) {
+                       // JOptionPane.showMessageDialog(null, "too many vertices!","ERROR", JOptionPane.ERROR_MESSAGE);
+                    //}
+                    btnNext.setEnabled(true);
+
                 }
-                //panel.run(fileChooser.getSelectedFile());
-                panel.functionVisual();
-                btnNext.setEnabled(true);
             }
-            // }
-            // }
-
-
         });
     }
 }

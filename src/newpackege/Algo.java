@@ -34,14 +34,14 @@ public class Algo extends Visualisator {
         }
     }
 
-    /*public void run(File file) {
+    public void run(File file) {
         readData(file);
         for (int v = 0; v < n; ++v) {
             if (!used[v]) {
                 dfs(v);
             }
         }
-    }*/
+    }
 
     public void readData() throws IOException {
         System.out.print("Enter number of vertices and edges: ");
@@ -99,6 +99,4 @@ public class Algo extends Visualisator {
     public int getN(){
         return this.listDepht.size();
     }
-
-
 }
