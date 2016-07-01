@@ -71,6 +71,8 @@ public class Algo extends Visualisator {
 
     public void readData(File file) {
 
+        listDepht = new ArrayList<>();
+        listEdges = new ArrayList<>();
         try {
             BufferedReader fin = new BufferedReader(new FileReader(file));
             n = Integer.parseInt(fin.readLine());
