@@ -1,11 +1,11 @@
 package newpackege;
 
 import javax.swing.*;
-
+import com.mxgraph.model.mxIGraphModel;
 import com.mxgraph.swing.mxGraphComponent;
 import com.mxgraph.view.mxGraph;
 import javafx.util.Pair;
-
+import java.awt.*;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -18,27 +18,33 @@ public class Visualisator extends JPanel {
     protected boolean used[]; //массив для хранения информации о пройденных и не пройденных вершинах
     protected ArrayList<Integer> listDepht;
     protected ArrayList<Pair<Integer, Integer>> listEdges;
-
-    protected PrintWriter cout;
-
+    protected Object[] points;
+    protected mxIGraphModel model;
+    public PrintWriter cout;
 
     @SuppressWarnings("unused")
     public Visualisator() throws IOException {
-        this.setSize(500, 500);
+        this.setSize(700, 700);
+        this.setPreferredSize(new Dimension(700, 700));
         listDepht = new ArrayList<>();
         listEdges = new ArrayList<>();
     }
 
     public void functionVisual() {
+        removeAll();
         mxGraph graph = new mxGraph();
+
+        points = new Object[n];
+        model = graph.getModel();
+
         Object parent = graph.getDefaultParent();
-        graph.getModel().beginUpdate();
-        Object points[] = new Object[n];
+        model.beginUpdate();
+
         double phi0 = 0;
         double phi = 2 * Math.PI / n;
-        int r = 250; // радиус окружности
+        int r = 230; // радиус окружности
         for (int i = 0; i < points.length; i++) {
-            points[i] = graph.insertVertex(parent, null, i + 1, 300 + r * Math.cos(phi0), 300 + r * Math.sin(phi0), 18, 18, "shape=ellipse");
+            points[i] = graph.insertVertex(parent, null, i + 1, 250 + r * Math.cos(phi0), 250 + r * Math.sin(phi0), 30, 30, "shape=ellipse");
             phi0 += phi;
         }
         for (int i = 0; i < adj.size(); i++) {
@@ -46,47 +52,32 @@ public class Visualisator extends JPanel {
                 graph.insertEdge(parent, null, null, points[i], points[adj.get(i).get(j)]);
             }
         }
-        graph.getModel().endUpdate();
+
+        model.endUpdate();
         mxGraphComponent graphComponent = new mxGraphComponent(graph);
         this.add(graphComponent);
         this.revalidate();
     }
 
 
-    public void dfsVisual() {
+    public void dfsVisual(int step) {
         mxGraph graph = new mxGraph();
-        Object parent = graph.getDefaultParent();
-        graph.getModel().beginUpdate();
-        Object points[] = new Object[n];
-        double phi0 = 0;
-        double phi = 2 * Math.PI / n;
-        int r = 250; // радиус окружности
-        for (int i = 0; i < points.length; i++) {
-            points[i] = graph.insertVertex(parent, null, i + 1, 300 + r * Math.cos(phi0), 300 + r * Math.sin(phi0), 18, 18, "shape=ellipse");
-            phi0 += phi;
+        graph.setModel(model);
+        model.beginUpdate();
+        if (step == 0) {
+            graph.getModel().setValue(points[listDepht.get(0) - 1], graph.getModel().getValue(points[listDepht.get(0) - 1]).toString() + "(1)");
         }
-        for (int i = 0; i < listEdges.size(); i++) {
-            graph.insertEdge(parent, null, null, points[listEdges.get(i).getKey()], points[listEdges.get(i).getValue()]);
+        else {
+
+            for (int i = 0; i < listDepht.size(); i++) {
+                if (listEdges.contains(new Pair<>(i, listDepht.get(step) - 1))) {
+                    graph.getModel().setStyle(graph.getEdgesBetween(points[i], points[listDepht.get(step) - 1])[0], "strokeColor=#00FF00");
+                    break;
+                }
+            }
+            graph.getModel().setValue(points[listDepht.get(step) - 1], graph.getModel().getValue(points[listDepht.get(step) - 1]).toString() + "(" + (step + 1) + ")");
         }
-        graph.getModel().endUpdate();
-        mxGraphComponent graphComponent = new mxGraphComponent(graph);
-        this.add(graphComponent);
+        model.endUpdate();
         this.revalidate();
-    }
-
-
-    public static void main(String[] args) throws IOException {
-        JFrame frame = new JFrame();
-        frame.setSize(800, 800);
-        Algo panel = new Algo();
-        try {
-            panel.run();
-            panel.functionVisual();
-            panel.dfsVisual();
-            frame.add(panel);
-            frame.setVisible(true);
-        } catch (IndexOutOfBoundsException e) {
-            System.err.println(e.getMessage());
-        }
     }
 }

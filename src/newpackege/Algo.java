@@ -1,16 +1,18 @@
 package newpackege;
+
 import javafx.util.Pair;
 
-import java.io.IOException;
-import java.io.PrintWriter;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
-public class Algo extends Visualisator{
+
+public class Algo extends Visualisator {
 
     public Algo() throws IOException {
     }
+
     public void dfs(int v) {
-        //если вершина является пройденной, то не производим из нее вызов процедуры
+        //Если вершина является пройденной, то не производим из нее вызов процедуры
         used[v] = true; //помечаем вершину как пройденную
         listDepht.add(v + 1);
         //запускаем обход из всех вершин, смежных с вершиной v
@@ -22,6 +24,7 @@ public class Algo extends Visualisator{
             }
         }
     }
+
     public void run() throws IOException {
         readData();
         for (int v = 0; v < n; ++v) {
@@ -30,6 +33,16 @@ public class Algo extends Visualisator{
             }
         }
     }
+
+    /*public void run(File file) {
+        readData(file);
+        for (int v = 0; v < n; ++v) {
+            if (!used[v]) {
+                dfs(v);
+            }
+        }
+    }*/
+
     public void readData() throws IOException {
         System.out.print("Enter number of vertices and edges: ");
         Scanner cin = new Scanner(System.in);
@@ -39,7 +52,6 @@ public class Algo extends Visualisator{
         m = cin.nextInt(); //считываем количество ребер графа
         System.out.print("Enter vertices:\n");
         //инициализируем список смежности графа размерности n
-
         adj = new ArrayList<ArrayList<Integer>>(n);
         used = new boolean[n];
 
@@ -56,4 +68,37 @@ public class Algo extends Visualisator{
             adj.get(w).add(v);
         }
     }
+
+    public void readData(File file) {
+
+        try {
+            BufferedReader fin = new BufferedReader(new FileReader(file));
+            n = Integer.parseInt(fin.readLine());
+            m = Integer.parseInt(fin.readLine());
+
+            adj = new ArrayList<ArrayList<Integer>>(n);
+            used = new boolean[n];
+
+            for (int i = 0; i < n; i++) {
+                adj.add(new ArrayList<Integer>());
+            }
+
+            for (int i = 0; i < m; i++) {
+                String[] s = fin.readLine().split(" ");
+                int v = Integer.parseInt(s[0]);
+                int w = Integer.parseInt(s[1]);
+                v--;
+                w--;
+                adj.get(v).add(w);
+                adj.get(w).add(v);
+            }
+        } catch (IOException ex) {
+
+        }
+    }
+    public int getN(){
+        return this.listDepht.size();
+    }
+
+
 }
